@@ -1,6 +1,7 @@
 {
   "name": "noted",
   "version": "0.1.0",
+  "description": "A minimal note taking app. Write, Save and Share easily.",
   "private": true,
   "workspaces": [
     "packages/*"

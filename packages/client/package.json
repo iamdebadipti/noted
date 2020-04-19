@@ -1,13 +1,15 @@
 {
   "name": "client",
   "version": "0.1.0",
+  "description": "React Front End - Noted",
   "private": true,
   "dependencies": {
     "node-sass": "^4.13.1",
     "react": "^16.13.1",
     "react-dom": "^16.13.1",
     "react-router-dom": "^5.1.2",
-    "react-scripts": "3.4.1"
+    "react-scripts": "3.4.1",
+    "use-dark-hook": "^0.2.2"
   },
   "scripts": {
     "start": "react-scripts start",
