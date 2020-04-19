@@ -20,7 +20,7 @@ function App() {
     // checking if notes are already available
     setTimeout(() => {
       setNoteExists(true);
-    }, 3000);
+    }, 200);
   }, []);
 
   // app loading state -- checking notes availability
