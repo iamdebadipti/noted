@@ -20,6 +20,7 @@
     }
   }
   &_switch {
+    margin-left: -0.8rem;
     > span[class^='icon-'] {
       margin-right: 0.8rem;
       color: $main-dark;
@@ -38,7 +39,7 @@
           display: inline-flex;
           align-items: center;
           color: $gray-darker;
-          transition: 0.2s color ease-in;
+          transition: 0.1s color ease-in;
           &:hover,
           &:focus,
           &:active {

@@ -9,7 +9,11 @@ const Sidebar = ({ mode, toggleMode }) => {
           <h3>noted</h3>
           <span>v {version}</span>
         </div>
-        <button onClick={() => toggleMode()} className="sidebar_switch">
+        <button
+          onClick={() => toggleMode()}
+          className="sidebar_switch"
+          title="Switch theme"
+        >
           <span className={`icon-${mode === 'dark' ? 'sun' : 'moon'}`} />
           {mode === 'dark' ? 'Light Theme' : 'Dark Theme'}
         </button>

@@ -1,25 +1,25 @@
 body {
   font-family: $font-regular;
-  transition: background-color 0.2s ease-in;
+  transition: background-color 0.1s ease-in;
   will-change: background-color;
   background-color: $whitish;
   color: $main-dark;
-  &.light {
-    button {
-      color: $gray-darker;
-      &:hover {
-        background-color: $gray-lightest;
-      }
-      &:active,
-      &:focus {
-        background-color: rgba($gray-light, 0.5);
-      }
+  // &.light {
+  button {
+    color: $gray-darker;
+    &:hover {
+      background-color: $gray-lightest;
+    }
+    &:active,
+    &:focus {
+      background-color: rgba($gray-light, 0.5);
     }
   }
-  &.dark {
-    background-color: $main-dark;
-    color: $whitish;
-  }
+  // }
+  // &.dark {
+  //   background-color: $main-dark;
+  //   color: $whitish;
+  // }
 }
 
 button {
@@ -27,12 +27,11 @@ button {
   border: none;
   border-radius: 6px;
   padding: 0.5rem 0.8rem;
-  margin-left: -0.8rem;
   display: flex;
   align-items: center;
   font-size: 0.88rem;
   cursor: pointer;
-  transition: 0.2s background-color ease-in;
+  transition: 0.1s background-color ease-in;
   &:active,
   &:focus {
     outline: none;
