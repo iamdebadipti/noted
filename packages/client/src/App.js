@@ -5,7 +5,7 @@ import {
   Switch,
   Redirect,
   Route,
-  BrowserRouter as Router,
+  BrowserRouter as Router
 } from 'react-router-dom';
 import Write from './components/Write';
 import Notes from './components/Notes';
@@ -33,7 +33,9 @@ function App() {
       <Router>
         <Switch>
           <Route exact path="/write" component={Write} />
+          <Route path="/write/:id" component={Write} />
           <Route exact path="/notes" component={Notes} />
+          <Route path="/notes/:id" component={Notes} />
           {/* redirect to respective paths depending on notes availability */}
           <Route
             exact
