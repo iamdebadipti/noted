@@ -32,7 +32,7 @@ const SingleNote = ({ note }) => {
           </div>
         )}
       </div>
-      <div className="notes_list_item_heading">
+      <div className="notes_list_item_body">
         <p>{note.excerpt}</p>
       </div>
     </div>
