@@ -5,7 +5,8 @@ body {
   background-color: $whitish;
   color: $main-dark;
   // &.light {
-  button {
+  button,
+  a[type^='button'] {
     color: $gray-darker;
     &:hover {
       background-color: $gray-lightest;
@@ -22,14 +23,16 @@ body {
   // }
 }
 
-button {
+button,
+a[type^='button'] {
   background-color: transparent;
   border: none;
   border-radius: 6px;
   padding: 0.5rem 0.8rem;
-  display: flex;
+  display: inline-flex;
   align-items: center;
   font-size: 0.88rem;
+  line-height: 1;
   cursor: pointer;
   transition: 0.1s background-color ease-in;
   &:active,
