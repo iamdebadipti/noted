@@ -3,6 +3,11 @@
   "version": "0.1.0",
   "description": "A minimal note taking app. Write, Save and Share easily.",
   "private": true,
+  "license": "ISC",
+  "author": {
+    "name": "iamdebadipti",
+    "email": "iamdebadipti@gmail.com"
+  },
   "workspaces": [
     "packages/*"
   ]

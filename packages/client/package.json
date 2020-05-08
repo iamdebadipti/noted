@@ -1,7 +1,6 @@
 {
-  "name": "client",
+  "name": "noted-client",
   "version": "0.1.0",
-  "description": "React Front End - Noted",
   "private": true,
   "dependencies": {
     "node-sass": "^4.13.1",
@@ -32,8 +31,5 @@
       "last 1 firefox version",
       "last 1 safari version"
     ]
-  },
-  "devDependencies": {
-    "prettier": "^2.0.4"
   }
 }
