@@ -19,6 +19,7 @@ packages/server/build
 .DS_Store
 packages/client/.DS_Store
 packages/server/.DS_Store
+packages/server/.env
 .env.local
 .env.development.local
 .env.test.local
