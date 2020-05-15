@@ -1,7 +1,7 @@
 {
   "name": "noted",
   "version": "0.1.0",
-  "description": "A minimal note taking app. Write, Save and Share easily.",
+  "description": "A minimal markdown note taking app. Write, Save, Lock and Share easily.",
   "private": true,
   "license": "ISC",
   "author": {
