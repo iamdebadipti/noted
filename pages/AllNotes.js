@@ -1,11 +1,21 @@
-import React from 'react';
-import { View, Button, Text } from 'react-native';
+import React, { Fragment } from 'react';
+import { FlatList } from 'react-native';
+import PageHeader from '../components/PageHeader';
+import NoteListItem from '../components/NoteListItem';
 
-export default function AllNotes({ navigation }) {
+import { allNotes } from '../fake';
+
+const AllNotes = ({ navigation }) => {
   return (
-    <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}>
-      <Text style={{ marginBottom: 10 }}>All Notes Page</Text>
-      <Button onPress={() => navigation.toggleDrawer()} title="Open Menu" />
-    </View>
+    <Fragment>
+      <PageHeader
+        title={'All Notes'}
+        leftAction={{ action: () => navigation.toggleDrawer(), icon: 'menu' }}
+        rightAction={{ action: () => console.log('handle search'), icon: 'search' }}
+      />
+      <FlatList data={allNotes} renderItem={({ item }) => <NoteListItem item={item} key={item.key} />} />
+    </Fragment>
   );
-}
+};
+
+export default AllNotes;
