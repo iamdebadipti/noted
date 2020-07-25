@@ -1,4 +1,4 @@
-export const NOTE_LONG_ACTION = [
+export const NOTE_LONGPRESS_ACTION = [
   {
     title: 'Delete',
     icon: 'trash',

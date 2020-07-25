@@ -1,14 +1,17 @@
 import React from 'react';
-import { View, Text, StyleSheet } from 'react-native';
+import { View, Text, StyleSheet, TouchableOpacity } from 'react-native';
 import { theme } from '../config';
 import Icon from 'react-native-vector-icons/Feather';
-import { TouchableOpacity } from 'react-native-gesture-handler';
 
 const PageHeader = ({ title, leftAction, rightAction }) => {
   return (
     <View style={styles.headingStyle}>
       {leftAction ? (
-        <TouchableOpacity style={styles.menuAction} onPress={() => leftAction.action()}>
+        <TouchableOpacity
+          style={styles.menuAction}
+          onPress={() => leftAction.action()}
+          activeOpacity={theme.activeOpacity}
+        >
           <Icon name={leftAction.icon} size={24} color="white" />
         </TouchableOpacity>
       ) : (
@@ -16,7 +19,11 @@ const PageHeader = ({ title, leftAction, rightAction }) => {
       )}
       <Text style={styles.headingFont}>{title}</Text>
       {rightAction ? (
-        <TouchableOpacity style={styles.menuAction} onPress={() => rightAction.action()}>
+        <TouchableOpacity
+          style={styles.menuAction}
+          onPress={() => rightAction.action()}
+          activeOpacity={theme.activeOpacity}
+        >
           <Icon name={rightAction.icon} size={24} color="white" />
         </TouchableOpacity>
       ) : (
