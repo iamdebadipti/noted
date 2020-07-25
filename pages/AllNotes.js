@@ -85,14 +85,14 @@ const styles = StyleSheet.create({
   },
   floatingButton: {
     position: 'absolute',
-    bottom: 30,
-    right: 30,
-    width: 50,
-    height: 50,
+    bottom: 36,
+    right: 36,
+    width: 54,
+    height: 54,
     backgroundColor: theme.accentColor,
     alignItems: 'center',
     justifyContent: 'center',
-    borderRadius: 25,
+    borderRadius: 27,
     elevation: 4
   }
 });
