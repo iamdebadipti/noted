@@ -1,14 +1,14 @@
 import React, { Fragment, useState } from 'react';
-import { FlatList, StyleSheet, TouchableOpacity, Text, View } from 'react-native';
+import { FlatList, StyleSheet, TouchableOpacity, Text } from 'react-native';
 import PageHeader from '../components/PageHeader';
 import NoteListItem from '../components/NoteListItem';
 import ModalCustom from '../components/ModalCustom';
 import { NOTE_LONGPRESS_ACTION } from '../utils/constants';
 import Icon from 'react-native-vector-icons/Feather';
 import { theme } from '../config';
+import EmptyComponent from '../components/EmptyComponent';
 
 import { allNotes } from '../fake';
-import EmptyComponent from '../components/EmptyComponent';
 
 const AllNotes = ({ navigation }) => {
   const [selectedItemId, setSelectedItemId] = useState(null);
@@ -19,7 +19,7 @@ const AllNotes = ({ navigation }) => {
       <PageHeader
         title={'All Notes'}
         leftAction={{ action: () => navigation.toggleDrawer(), icon: 'menu' }}
-        rightAction={{ action: () => console.log('handle search'), icon: 'search' }}
+        rightAction={{ action: () => navigation.navigate('Search'), icon: 'search' }}
       />
 
       {/* all notes */}
@@ -38,7 +38,7 @@ const AllNotes = ({ navigation }) => {
       <TouchableOpacity
         style={styles.floatingButton}
         activeOpacity={theme.activeOpacity}
-        onPress={() => console.log('add note ...')}
+        onPress={() => navigation.navigate('Note')}
       >
         <Icon name="plus" size={24} color="#ffffff" />
       </TouchableOpacity>

@@ -1,38 +1,26 @@
 import React from 'react';
 import { StatusBar } from 'react-native';
 import { NavigationContainer } from '@react-navigation/native';
-import { createDrawerNavigator } from '@react-navigation/drawer';
-import DrawerComponent from './components/DrawerComponent';
-import AllNotes from './pages/AllNotes';
-import Trash from './pages/Trash';
+import { createStackNavigator } from '@react-navigation/stack';
 import { theme } from './config';
-import Icon from 'react-native-vector-icons/Feather';
+import Main from './stacks/Main';
+import Note from './stacks/Note';
+import Search from './stacks/Search';
 
-// create drawer navigation
-const Drawer = createDrawerNavigator();
+// create main stack navigation
+const Stack = createStackNavigator();
 
 const App = () => {
   return (
     <NavigationContainer>
-      {/* status bar variant */}
+      {/* status bar */}
       <StatusBar backgroundColor={theme.mainColor} barStyle="light-content" />
-      {/* drawer navigation */}
-      <Drawer.Navigator initialRouteName="All Notes" drawerContent={(props) => <DrawerComponent {...props} />}>
-        <Drawer.Screen
-          name="All Notes"
-          component={AllNotes}
-          options={{
-            drawerIcon: () => <Icon name="list" size={24} color={theme.mainColor} />
-          }}
-        />
-        <Drawer.Screen
-          name="Trash"
-          component={Trash}
-          options={{
-            drawerIcon: () => <Icon name="trash" size={24} color={theme.mainColor} />
-          }}
-        />
-      </Drawer.Navigator>
+      {/* main stack */}
+      <Stack.Navigator initialRouteName="Main" screenOptions={{ headerShown: false }}>
+        <Stack.Screen name="Main" component={Main} />
+        <Stack.Screen name="Note" component={Note} />
+        <Stack.Screen name="Search" component={Search} />
+      </Stack.Navigator>
     </NavigationContainer>
   );
 };
