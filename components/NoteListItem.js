@@ -26,7 +26,8 @@ const styles = StyleSheet.create({
     paddingLeft: 20,
     paddingRight: 20,
     borderBottomWidth: 1,
-    borderBottomColor: theme.lightGray
+    borderBottomColor: theme.lightGray,
+    backgroundColor: '#fff'
   },
   textHeading: {
     fontSize: 18,

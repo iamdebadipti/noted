@@ -1,5 +1,5 @@
 import React, { Fragment, useState } from 'react';
-import { FlatList, StyleSheet, TouchableOpacity, Text } from 'react-native';
+import { FlatList, StyleSheet, TouchableOpacity, Text, View } from 'react-native';
 import PageHeader from '../components/PageHeader';
 import NoteListItem from '../components/NoteListItem';
 import ModalCustom from '../components/ModalCustom';
@@ -21,7 +21,9 @@ const AllNotes = ({ navigation }) => {
         leftAction={{ action: () => navigation.toggleDrawer(), icon: 'menu' }}
         rightAction={{ action: () => console.log('handle search'), icon: 'search' }}
       />
-      {!allNotes.length ? (
+
+      {/* all notes */}
+      {allNotes.length ? (
         <FlatList
           data={allNotes}
           renderItem={({ item }) => (
@@ -29,8 +31,17 @@ const AllNotes = ({ navigation }) => {
           )}
         />
       ) : (
-        <EmptyComponent title="No Notes Found" />
+        <EmptyComponent title="Write your first note!" />
       )}
+
+      {/* add note floating button */}
+      <TouchableOpacity
+        style={styles.floatingButton}
+        activeOpacity={theme.activeOpacity}
+        onPress={() => console.log('add note ...')}
+      >
+        <Icon name="plus" size={24} color="#ffffff" />
+      </TouchableOpacity>
 
       {/* long press action modal */}
       <ModalCustom
@@ -71,6 +82,18 @@ const styles = StyleSheet.create({
     marginLeft: 10,
     fontSize: 18,
     color: theme.textMain
+  },
+  floatingButton: {
+    position: 'absolute',
+    bottom: 30,
+    right: 30,
+    width: 50,
+    height: 50,
+    backgroundColor: theme.accentColor,
+    alignItems: 'center',
+    justifyContent: 'center',
+    borderRadius: 25,
+    elevation: 4
   }
 });
 
