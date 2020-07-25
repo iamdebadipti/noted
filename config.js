@@ -2,7 +2,8 @@
 export const theme = {
   mainColor: '#4682B4',
   textMain: '#444444',
-  textSecondary: '#777777',
+  textSecondary: '#888888',
+  activeOpacity: 0.6,
   lightGray: '#dedede',
   headingFontSize: 20,
   // common components
