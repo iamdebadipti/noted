@@ -3,7 +3,7 @@ import { FlatList, StyleSheet, TouchableOpacity, Text } from 'react-native';
 import PageHeader from '../components/PageHeader';
 import NoteListItem from '../components/NoteListItem';
 import ModalCustom from '../components/ModalCustom';
-import { NOTE_LONGPRESS_ACTION } from '../utils/constants';
+import { NOTE_ACTIONS } from '../utils/constants';
 import Icon from 'react-native-vector-icons/Feather';
 import { theme } from '../config';
 import EmptyComponent from '../components/EmptyComponent';
@@ -56,7 +56,7 @@ const AllNotes = ({ navigation }) => {
         setModalShow={setModalShow}
       >
         {/* Multiple note long press actions -- to update please change in /utils/constants*/}
-        {NOTE_LONGPRESS_ACTION.map((item) => {
+        {NOTE_ACTIONS.map((item) => {
           return (
             <TouchableOpacity
               key={item.action}
@@ -64,7 +64,7 @@ const AllNotes = ({ navigation }) => {
               onPress={() => console.log(item.action, selectedNoteId)}
               activeOpacity={theme.activeOpacity}
             >
-              <Icon name={item.icon} size={18} color={theme.textMain} />
+              <Icon name={item.icon} size={22} color={theme.textSecondary} />
               <Text style={styles.itemStyleText}>{item.title}</Text>
             </TouchableOpacity>
           );
@@ -82,7 +82,7 @@ const styles = StyleSheet.create({
     alignItems: 'center'
   },
   itemStyleText: {
-    marginLeft: 10,
+    marginLeft: 15,
     fontSize: 18,
     color: theme.textMain
   },
