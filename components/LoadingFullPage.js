@@ -7,9 +7,16 @@ const LoadingFullPage = ({ size, color, text }) => {
 
   // wait 100ms before showing the loader
   useEffect(() => {
-    setTimeout(() => {
+    let timerId;
+
+    timerId = setTimeout(() => {
       setShow(true);
+      console.warn('hello error');
     }, 100);
+
+    return () => {
+      clearTimeout(timerId);
+    };
   }, []);
 
   return show ? (
