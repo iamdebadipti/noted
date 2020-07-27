@@ -1,11 +1,14 @@
 import React from 'react';
 import { Text, StyleSheet, TouchableOpacity } from 'react-native';
 import { theme } from '../config';
+import { useNavigation } from '@react-navigation/native';
 
 const NoteListItem = ({ item, setModalShow, setSelectedItemId }) => {
+  const navigation = useNavigation();
+
   return (
     <TouchableOpacity
-      onPress={() => setSelectedItemId(item.id)}
+      onPress={() => navigation.navigate('Note', { note_id: item.id })}
       style={styles.container}
       onLongPress={async () => {
         await setSelectedItemId(item.id);
