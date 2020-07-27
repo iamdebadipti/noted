@@ -22,6 +22,7 @@ const LoadingFullPage = ({ size, color, text }) => {
 
 const styles = StyleSheet.create({
   container: {
+    backgroundColor: '#ffffff',
     flex: 1,
     alignItems: 'center',
     justifyContent: 'center'

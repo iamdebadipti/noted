@@ -36,10 +36,11 @@ const NotePage = ({ note, handleGoBack }) => {
 
 const styles = StyleSheet.create({
   container: {
-    margin: 5,
-    marginLeft: 20,
-    marginRight: 20,
-    flex: 1
+    padding: 5,
+    paddingLeft: 20,
+    paddingRight: 20,
+    flex: 1,
+    backgroundColor: '#ffffff'
   },
   inputStyle: {
     textAlignVertical: 'top',
