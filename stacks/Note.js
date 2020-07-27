@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { useRoute } from '@react-navigation/native';
 import { allNotes } from '../fake';
 import NotePage from '../pages/Note';
-import { Text } from 'react-native';
+import LoadingFullPage from '../components/LoadingFullPage';
 
 const Note = ({ navigation }) => {
   // note data state
@@ -28,7 +28,7 @@ const Note = ({ navigation }) => {
   // return according to the note data
   return note === undefined ? (
     // placeholder for note or a loading component
-    <Text>Loading...</Text>
+    <LoadingFullPage />
   ) : (
     <NotePage note={note} handleGoBack={() => navigation.navigate('Main')} />
   );
