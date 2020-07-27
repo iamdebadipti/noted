@@ -11,7 +11,9 @@ import EmptyComponent from '../components/EmptyComponent';
 import { allNotes } from '../fake';
 
 const AllNotes = ({ navigation }) => {
-  const [selectedItemId, setSelectedItemId] = useState(null);
+  // selected note id state
+  const [selectedNoteId, setSelectedNoteId] = useState(null);
+  // modal show state
   const [modalShow, setModalShow] = useState(false);
 
   return (
@@ -22,19 +24,19 @@ const AllNotes = ({ navigation }) => {
         rightAction={{ action: () => navigation.navigate('Search'), icon: 'search' }}
       />
 
-      {/* all notes */}
+      {/* all notes -- render FlatList otherwise an Empty Component if there is no data */}
       {allNotes.length ? (
         <FlatList
           data={allNotes}
           renderItem={({ item }) => (
-            <NoteListItem item={item} key={item.id} setModalShow={setModalShow} setSelectedItemId={setSelectedItemId} />
+            <NoteListItem item={item} key={item.id} setModalShow={setModalShow} setSelectedNoteId={setSelectedNoteId} />
           )}
         />
       ) : (
         <EmptyComponent title="Write your first note!" />
       )}
 
-      {/* add note floating button */}
+      {/* add note floating button -- clicking will navigate to Note stack */}
       <TouchableOpacity
         style={styles.floatingButton}
         activeOpacity={theme.activeOpacity}
@@ -53,12 +55,13 @@ const AllNotes = ({ navigation }) => {
         }}
         setModalShow={setModalShow}
       >
+        {/* Multiple note long press actions -- to update please change in /utils/constants*/}
         {NOTE_LONGPRESS_ACTION.map((item) => {
           return (
             <TouchableOpacity
               key={item.action}
               style={styles.itemStyle}
-              onPress={() => console.log(item.action, selectedItemId)}
+              onPress={() => console.log(item.action, selectedNoteId)}
               activeOpacity={theme.activeOpacity}
             >
               <Icon name={item.icon} size={18} color={theme.textMain} />

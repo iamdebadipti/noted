@@ -3,15 +3,18 @@ import { Text, StyleSheet, TouchableOpacity } from 'react-native';
 import { theme } from '../config';
 import { useNavigation } from '@react-navigation/native';
 
-const NoteListItem = ({ item, setModalShow, setSelectedItemId }) => {
+const NoteListItem = ({ item, setModalShow, setSelectedNoteId }) => {
+  // using the react navigation - useNavigation hook
   const navigation = useNavigation();
 
   return (
     <TouchableOpacity
+      // on press navigate to Note stack pushing note_id in the params
       onPress={() => navigation.navigate('Note', { note_id: item.id })}
       style={styles.container}
+      // long press action -- set the note id, then show the modal
       onLongPress={async () => {
-        await setSelectedItemId(item.id);
+        await setSelectedNoteId(item.id);
         await setModalShow(true);
       }}
       delayLongPress={250}

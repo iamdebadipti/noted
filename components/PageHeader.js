@@ -15,6 +15,7 @@ const PageHeader = ({ title, leftAction, rightAction }) => {
           <Icon name={leftAction.icon} size={24} color="white" />
         </TouchableOpacity>
       ) : (
+        // if there is no leftAction mentioned render an empty View component with exact width
         <View style={{ width: 34 }} />
       )}
       <Text style={styles.headingFont}>{title}</Text>
