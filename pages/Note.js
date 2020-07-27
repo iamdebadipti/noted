@@ -1,14 +1,50 @@
-import React from 'react';
-import { View, TextInput, Button } from 'react-native';
+import React, { useState, Fragment } from 'react';
+import { View, TextInput, StyleSheet, Text, ScrollView } from 'react-native';
+import NoteHeader from '../components/NoteHeader';
 
 const NotePage = ({ note, handleGoBack }) => {
+  const [noteText, setNoteText] = useState(note ? note.title : '');
+
+  // console.warn('rendered...');
+
+  const handleToolIconClick = (action) => {
+    // available tool actions - INFO | SHARE | TRASH
+    console.warn('action', action);
+  };
+
   return (
-    <View>
-      {/* autofocus if it is a new note request */}
-      <TextInput value={note ? note.title : 'New Note'} autoFocus={note === null} />
-      <Button title="Go Back" onPress={() => handleGoBack()} />
-    </View>
+    <Fragment>
+      <NoteHeader handleGoBack={handleGoBack} handleToolIconClick={handleToolIconClick} />
+      <ScrollView style={styles.container}>
+        {/* autofocus if it is a new note request */}
+        <TextInput
+          style={styles.inputStyle}
+          value={noteText}
+          multiline
+          autoFocus={note === null}
+          onChangeText={(text) => setNoteText(text)}
+          // avoiding unusual text breaks
+          textBreakStrategy="simple"
+        />
+      </ScrollView>
+      <View>
+        <Text>End</Text>
+      </View>
+    </Fragment>
   );
 };
+
+const styles = StyleSheet.create({
+  container: {
+    margin: 5,
+    marginLeft: 20,
+    marginRight: 20,
+    flex: 1
+  },
+  inputStyle: {
+    textAlignVertical: 'top',
+    fontSize: 18
+  }
+});
 
 export default NotePage;
