@@ -1,8 +1,11 @@
 import React, { useState, Fragment } from 'react';
-import { View, TextInput, StyleSheet, Text, ScrollView } from 'react-native';
+import { TextInput, StyleSheet, ScrollView } from 'react-native';
 import NoteHeader from '../components/NoteHeader';
+import { theme } from '../config';
+import NoteTags from '../components/NoteTags';
 
 const NotePage = ({ note, handleGoBack }) => {
+  // setting the note prop title as the initial state -- if available
   const [noteText, setNoteText] = useState(note ? note.title : '');
 
   // console.warn('rendered...');
@@ -14,6 +17,7 @@ const NotePage = ({ note, handleGoBack }) => {
 
   return (
     <Fragment>
+      {/* note tool actions */}
       <NoteHeader handleGoBack={handleGoBack} handleToolIconClick={handleToolIconClick} />
       <ScrollView style={styles.container}>
         {/* autofocus if it is a new note request */}
@@ -25,11 +29,11 @@ const NotePage = ({ note, handleGoBack }) => {
           onChangeText={(text) => setNoteText(text)}
           // avoiding unusual text breaks
           textBreakStrategy="simple"
+          placeholder="New Note"
         />
       </ScrollView>
-      <View>
-        <Text>End</Text>
-      </View>
+      {/* note tags */}
+      <NoteTags tagList={note ? note.tags : []} />
     </Fragment>
   );
 };
@@ -44,7 +48,8 @@ const styles = StyleSheet.create({
   },
   inputStyle: {
     textAlignVertical: 'top',
-    fontSize: 18
+    fontSize: 18,
+    color: theme.textMain
   }
 });
 
