@@ -1,12 +1,12 @@
 import React, { useState, Fragment } from 'react';
-import { TextInput, StyleSheet, ScrollView } from 'react-native';
+import { TextInput, StyleSheet, View } from 'react-native';
 import NoteHeader from '../components/NoteHeader';
 import { theme } from '../config';
 import NoteTags from '../components/NoteTags';
 
 const NotePage = ({ note, handleGoBack }) => {
   // setting the note prop title as the initial state -- if available
-  const [noteText, setNoteText] = useState(note ? note.title : '');
+  const [noteText, setNoteText] = useState(note ? note.description : '');
 
   // console.warn('rendered...');
 
@@ -19,7 +19,7 @@ const NotePage = ({ note, handleGoBack }) => {
     <Fragment>
       {/* note tool actions */}
       <NoteHeader handleGoBack={handleGoBack} handleToolIconClick={handleToolIconClick} />
-      <ScrollView style={styles.container}>
+      <View style={styles.container}>
         {/* autofocus if it is a new note request */}
         <TextInput
           style={styles.inputStyle}
@@ -31,7 +31,7 @@ const NotePage = ({ note, handleGoBack }) => {
           textBreakStrategy="simple"
           placeholder="New Note"
         />
-      </ScrollView>
+      </View>
       {/* note tags */}
       <NoteTags tagList={note ? note.tags : []} />
     </Fragment>
