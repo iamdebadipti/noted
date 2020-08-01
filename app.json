@@ -1,9 +1,9 @@
 {
-  "name": "myreactpro",
-  "displayName": "myreactpro",
+  "name": "noted",
+  "displayName": "noted",
   "expo": {
-    "name": "myreactpro",
-    "slug": "myreactpro",
+    "name": "noted",
+    "slug": "noted",
     "version": "1.0.0",
     "assetBundlePatterns": [
       "**/*"

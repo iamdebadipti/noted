@@ -1,4 +1,4 @@
-package com.myreactpro;
+package com.noted;
 
 import android.os.Bundle;
 

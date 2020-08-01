@@ -15,9 +15,9 @@
             <BuildableReference
                BuildableIdentifier = "primary"
                BlueprintIdentifier = "13B07F861A680F5B00A75B9A"
-               BuildableName = "myreactpro.app"
-               BlueprintName = "myreactpro"
-               ReferencedContainer = "container:myreactpro.xcodeproj">
+               BuildableName = "noted.app"
+               BlueprintName = "noted"
+               ReferencedContainer = "container:noted.xcodeproj">
             </BuildableReference>
          </BuildActionEntry>
       </BuildActionEntries>
@@ -33,9 +33,9 @@
             <BuildableReference
                BuildableIdentifier = "primary"
                BlueprintIdentifier = "00E356ED1AD99517003FC87E"
-               BuildableName = "myreactproTests.xctest"
-               BlueprintName = "myreactproTests"
-               ReferencedContainer = "container:myreactpro.xcodeproj">
+               BuildableName = "notedTests.xctest"
+               BlueprintName = "notedTests"
+               ReferencedContainer = "container:noted.xcodeproj">
             </BuildableReference>
          </TestableReference>
       </Testables>
@@ -55,9 +55,9 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "13B07F861A680F5B00A75B9A"
-            BuildableName = "myreactpro.app"
-            BlueprintName = "myreactpro"
-            ReferencedContainer = "container:myreactpro.xcodeproj">
+            BuildableName = "noted.app"
+            BlueprintName = "noted"
+            ReferencedContainer = "container:noted.xcodeproj">
          </BuildableReference>
       </BuildableProductRunnable>
    </LaunchAction>
@@ -72,9 +72,9 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "13B07F861A680F5B00A75B9A"
-            BuildableName = "myreactpro.app"
-            BlueprintName = "myreactpro"
-            ReferencedContainer = "container:myreactpro.xcodeproj">
+            BuildableName = "noted.app"
+            BlueprintName = "noted"
+            ReferencedContainer = "container:noted.xcodeproj">
          </BuildableReference>
       </BuildableProductRunnable>
    </ProfileAction>

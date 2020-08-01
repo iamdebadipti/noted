@@ -1,4 +1,4 @@
-package com.myreactpro.generated;
+package com.noted.generated;
 
 import java.util.Arrays;
 import java.util.List;
