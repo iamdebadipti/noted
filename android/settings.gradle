@@ -1,4 +1,4 @@
-rootProject.name = 'myreactpro'
+rootProject.name = 'noted'
 
 apply from: '../node_modules/react-native-unimodules/gradle.groovy'
 includeUnimodulesProjects()

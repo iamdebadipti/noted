@@ -135,7 +135,7 @@ android {
     }
 
     defaultConfig {
-        applicationId "com.myreactpro"
+        applicationId "com.noted"
         minSdkVersion rootProject.ext.minSdkVersion
         targetSdkVersion rootProject.ext.targetSdkVersion
         versionCode 1

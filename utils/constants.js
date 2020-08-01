@@ -1,12 +1,12 @@
-export const NOTE_LONGPRESS_ACTION = [
+export const NOTE_ACTIONS = [
   {
     title: 'Delete',
-    icon: 'trash',
+    icon: 'trash-2',
     action: 'DELETE'
   },
   {
     title: 'Share',
-    icon: 'share',
+    icon: 'share-2',
     action: 'SHARE'
   },
   {
