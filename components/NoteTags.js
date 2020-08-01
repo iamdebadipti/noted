@@ -78,7 +78,7 @@ const styles = StyleSheet.create({
     height: 26,
     paddingLeft: 10,
     paddingRight: 10,
-    backgroundColor: theme.lightestGray,
+    backgroundColor: theme.mainColorOpac,
     borderRadius: 20,
     marginRight: 5,
     marginBottom: 5

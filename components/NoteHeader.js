@@ -9,7 +9,7 @@ const NoteHeader = ({ handleGoBack, handleToolIconClick }) => {
     <View style={styles.headerStyle}>
       {/* handle navigate back to home */}
       <TouchableOpacity onPress={() => handleGoBack()} activeOpacity={theme.activeOpacity}>
-        <Icon name="arrow-left" size={24} color={theme.textSecondary} style={styles.toolIcon} />
+        <Icon name="arrow-left" size={24} color={theme.mainColor} style={styles.toolIcon} />
       </TouchableOpacity>
 
       {/* right note tools - SHARE | TRASH | INFO - onPress action  handleToolIconClick(actionName)*/}
@@ -22,7 +22,7 @@ const NoteHeader = ({ handleGoBack, handleToolIconClick }) => {
               style={styles.toolMargin}
               onPress={() => handleToolIconClick(action.action)}
             >
-              <Icon name={action.icon} size={24} color={theme.textSecondary} style={styles.toolIcon} />
+              <Icon name={action.icon} size={24} color={theme.mainColor} style={styles.toolIcon} />
             </TouchableOpacity>
           );
         })}

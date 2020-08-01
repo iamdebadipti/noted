@@ -1,6 +1,7 @@
 // app theme
 export const theme = {
   mainColor: '#4682B4',
+  mainColorOpac: '#e6f1fb',
   accentColor: '#ff6584',
   textMain: '#444444',
   textSecondary: '#888888',
