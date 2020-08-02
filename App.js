@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { StatusBar } from 'react-native';
+import { StatusBar, AsyncStorage } from 'react-native';
 import { NavigationContainer } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
 import { theme } from './config';
@@ -17,11 +17,22 @@ const Stack = createStackNavigator();
 const App = () => {
   // Set an initializing state whilst Firebase connects
   const [initializing, setInitializing] = useState(true);
-  const [user, setUser] = useState();
+  const [user, setUser] = useState(false);
+
+  // store user info using AsyncStorage API
+  const storeUserData = async (user) => {
+    const { uid } = user;
+    try {
+      await AsyncStorage.setItem('user_id', uid); // set user ID
+    } catch (error) {
+      console.log(error);
+    }
+  };
 
   // Handle user state changes
   function onAuthStateChanged(user) {
-    setUser(user);
+    storeUserData(user); // save the user details in async storage
+    setUser(true); // set the user state to true -- we have our user now
     if (initializing) setInitializing(false);
   }
 

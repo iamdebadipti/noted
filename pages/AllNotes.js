@@ -1,5 +1,5 @@
-import React, { Fragment, useState } from 'react';
-import { FlatList, StyleSheet, TouchableOpacity, Text } from 'react-native';
+import React, { Fragment, useState, useEffect } from 'react';
+import { FlatList, StyleSheet, TouchableOpacity, Text, AsyncStorage } from 'react-native';
 import PageHeader from '../components/PageHeader';
 import NoteListItem from '../components/NoteListItem';
 import ModalCustom from '../components/ModalCustom';
@@ -7,14 +7,40 @@ import { NOTE_ACTIONS } from '../utils/constants';
 import Icon from 'react-native-vector-icons/Feather';
 import { theme } from '../config';
 import EmptyComponent from '../components/EmptyComponent';
-
-import { allNotes } from '../fake';
+import LoadingFullPage from '../components/LoadingFullPage';
+import firestore from '@react-native-firebase/firestore';
 
 const AllNotes = ({ navigation }) => {
-  // selected note id state
-  const [selectedNoteId, setSelectedNoteId] = useState(null);
-  // modal show state
-  const [modalShow, setModalShow] = useState(false);
+  const [notes, setNotes] = useState(null); // state for storing all the notes
+  const [selectedNoteId, setSelectedNoteId] = useState(null); // selected note id state
+  const [modalShow, setModalShow] = useState(false); // modal show state
+
+  const fetchNotes = async () => {
+    const notesArr = []; // init an empty note list array
+    const userId = await AsyncStorage.getItem('user_id'); // get the user id from AsyncStorage API
+    // get firestore data
+    await firestore()
+      .collection('notes')
+      .doc(userId) // user id here
+      .collection('list')
+      .get()
+      .then((querySnapshot) => {
+        querySnapshot.forEach((doc) => {
+          notesArr.push({ id: doc.id, ...doc.data() }); // push to the notesArr[] with id key attached
+        });
+      });
+
+    setNotes(notesArr); // set the notesArr[] as the notes state array
+  };
+
+  useEffect(() => {
+    console.warn('fetching the note list...');
+    fetchNotes(); // fetching the notes from firebase firestore
+  }, []);
+
+  if (!notes) {
+    return <LoadingFullPage />; // we are still fetching the notes
+  }
 
   return (
     <Fragment>
@@ -25,11 +51,11 @@ const AllNotes = ({ navigation }) => {
       />
 
       {/* all notes -- render FlatList otherwise an Empty Component if there is no data */}
-      {allNotes.length ? (
+      {notes.length ? (
         <FlatList
-          data={allNotes}
-          renderItem={({ item }) => (
-            <NoteListItem item={item} key={item.id} setModalShow={setModalShow} setSelectedNoteId={setSelectedNoteId} />
+          data={notes}
+          renderItem={({ item, index }) => (
+            <NoteListItem item={item} key={index} setModalShow={setModalShow} setSelectedNoteId={setSelectedNoteId} />
           )}
         />
       ) : (

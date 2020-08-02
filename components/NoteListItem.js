@@ -21,7 +21,7 @@ const NoteListItem = ({ item, setModalShow, setSelectedNoteId }) => {
       activeOpacity={theme.activeOpacity}
     >
       <Text style={styles.textHeading}>{item.title}</Text>
-      <Text style={styles.textDescription}>{item.description}</Text>
+      <Text style={styles.textDescription}>{item.body}</Text>
     </TouchableOpacity>
   );
 };
