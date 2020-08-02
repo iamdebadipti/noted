@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from 'react';
 import { useRoute } from '@react-navigation/native';
-import { allNotes } from '../fake';
 import NotePage from '../pages/Note';
 import LoadingFullPage from '../components/LoadingFullPage';
 
