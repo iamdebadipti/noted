@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import {
   View,
   Text,
@@ -16,7 +16,6 @@ import { useNavigation } from '@react-navigation/native';
 
 const AuthComponent = ({ heading, buttonText, handleSubmit, newUser }) => {
   const [{ email, password }, setInput] = useState({ email: '', password: '' });
-  const [buttonDisabled, setButtonDisabled] = useState(true);
 
   // using the navigation hook from @react-navigation/native
   const navigation = useNavigation();
@@ -34,11 +33,6 @@ const AuthComponent = ({ heading, buttonText, handleSubmit, newUser }) => {
         break;
     }
   };
-
-  useEffect(() => {
-    // setting the disabled state for the submit button evaluating the input values
-    setButtonDisabled(email === '' || password === '');
-  }, [email, password]);
 
   return (
     <TouchableWithoutFeedback onPress={() => Keyboard.dismiss()} touchSoundDisabled>
@@ -69,9 +63,8 @@ const AuthComponent = ({ heading, buttonText, handleSubmit, newUser }) => {
                 handleSubmit({ email: email, password: password });
               }}
               background={TouchableNativeFeedback.Ripple(theme.mainColorOpac, false)}
-              disabled={buttonDisabled}
             >
-              <View style={{ ...theme.buttonStyle, backgroundColor: buttonDisabled ? theme.gray : theme.mainColor }}>
+              <View style={{ ...theme.buttonStyle }}>
                 <Text style={styles.buttonTextStyle}>{buttonText}</Text>
               </View>
             </TouchableNativeFeedback>
