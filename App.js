@@ -9,25 +9,29 @@ import Search from './stacks/Search';
 import LogIn from './stacks/LogIn';
 import SignUp from './stacks/SignUp';
 import LoadingFullPage from './components/LoadingFullPage';
+import auth from '@react-native-firebase/auth';
 
 // create main stack navigation
 const Stack = createStackNavigator();
 
 const App = () => {
-  const [isLoading, setIsLoading] = useState(true);
-  const [isLoggedIn, setIsLoggedIn] = useState(false);
+  // Set an initializing state whilst Firebase connects
+  const [initializing, setInitializing] = useState(true);
+  const [user, setUser] = useState();
+
+  // Handle user state changes
+  function onAuthStateChanged(user) {
+    setUser(user);
+    if (initializing) setInitializing(false);
+  }
 
   useEffect(() => {
-    // temporary / dummy functionality to check if user is logged in
-    setTimeout(() => {
-      setIsLoggedIn(false);
-      setIsLoading(false);
-    }, 1000);
+    const subscriber = auth().onAuthStateChanged(onAuthStateChanged);
+    return subscriber; // unsubscribe on unmount
   }, []);
 
-  if (isLoading) {
-    // We haven't finished checking if the user exists -- loader
-    return <LoadingFullPage />;
+  if (initializing) {
+    return <LoadingFullPage />; // we are still waiting firebase to connect
   }
 
   return (
@@ -36,8 +40,8 @@ const App = () => {
       <StatusBar backgroundColor={theme.mainColor} barStyle="light-content" />
       {/* main stack */}
       <Stack.Navigator initialRouteName="Main" screenOptions={{ headerShown: false }}>
-        {/* show screens as per the isLoggedIn status */}
-        {!isLoggedIn ? (
+        {/* check if user exists */}
+        {!user ? (
           <>
             <Stack.Screen name="SignUp" component={SignUp} options={{ title: 'Sign Up' }} />
             <Stack.Screen name="LogIn" component={LogIn} options={{ title: 'Log In' }} />
