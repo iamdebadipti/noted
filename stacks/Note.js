@@ -2,34 +2,72 @@ import React, { useEffect, useState } from 'react';
 import { useRoute } from '@react-navigation/native';
 import NotePage from '../pages/Note';
 import LoadingFullPage from '../components/LoadingFullPage';
+import { Button } from 'react-native';
+import { useNoteStore } from '../store';
 
 const Note = ({ navigation }) => {
-  // note data state
-  const [note, setNote] = useState(undefined);
-
-  // get navigation params using useRoute hook of react navigation
-  const { params } = useRoute();
+  const [{ title, body, tags }, setNote] = useState({ title: '', body: '', tags: [] }); // note initial state
+  const [loading, setLoading] = useState(true);
+  const { params } = useRoute(); // get navigation params using useRoute hook
+  const allNotes = useNoteStore((state) => state.allNotes); // useNoteStore hook from zustand -- allNotes subscribed
+  const saveNote = useNoteStore((state) => state.saveNote); // saveNote hook from zustand
 
   useEffect(() => {
     if (params) {
-      const noteId = params.note_id;
-      // get the particular note matching the ID
-      const noteObj = allNotes.filter((note) => note.id === noteId);
-      // set the note data as state
-      setNote(noteObj[0]);
+      const noteId = params.note_id; // get note_id from route params
+      const singleNote = allNotes.filter((note) => note.id === noteId)[0]; // filter a single
+      setNote({ title: singleNote.title, body: singleNote.body, tags: singleNote.tags }); // setting the fetched note data in state
+      setTimeout(() => {
+        setLoading(false); // setting loading to false
+      }, 200);
     } else {
-      // if no params there -- means a new note request
-      // so set the state as null
-      setNote(null);
+      setTimeout(() => {
+        setLoading(false); // no params -- set loading to false after 200ms
+      }, 200);
     }
   }, [params]);
 
-  // return according to the note data
-  return note === undefined ? (
-    // placeholder for note or a loading component
-    <LoadingFullPage />
+  // save the note in firebase
+  const handleSaveNote = async () => {
+    const noteObj = { title: title ? title : ' ', body: body, tags: tags };
+    // check the note body before saving
+    if (body !== '') {
+      saveNote(noteObj);
+    }
+    return;
+  };
+
+  // handle note input field changes
+  const handleInputChange = (type, value) => {
+    switch (type) {
+      case 'title':
+        setNote((note) => ({ ...note, title: value }));
+        break;
+      case 'body':
+        setNote((note) => ({ ...note, body: value }));
+        break;
+      default:
+        break;
+    }
+  };
+
+  // handle note tool action
+  const handleToolIconClick = (action) => {
+    console.warn('action', action); // available tool actions - INFO | SHARE | TRASH
+  };
+
+  return loading ? (
+    <LoadingFullPage /> // placeholder for note or a loading component
   ) : (
-    <NotePage note={note} handleGoBack={() => navigation.navigate('Main')} />
+    <>
+      <NotePage
+        note={{ title: title, body: body, tags: tags }}
+        handleGoBack={() => navigation.navigate('Main')}
+        handleInputChange={handleInputChange}
+        handleToolIconClick={handleToolIconClick}
+      />
+      <Button title="Save" onPress={() => handleSaveNote()} />
+    </>
   );
 };
 

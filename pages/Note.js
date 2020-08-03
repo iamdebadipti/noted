@@ -1,19 +1,11 @@
-import React, { useState, Fragment } from 'react';
+import React, { Fragment } from 'react';
 import { TextInput, StyleSheet, View } from 'react-native';
 import NoteHeader from '../components/NoteHeader';
 import { theme } from '../config';
 import NoteTags from '../components/NoteTags';
 
-const NotePage = ({ note, handleGoBack }) => {
-  // setting the note prop title as the initial state -- if available
-  const [noteText, setNoteText] = useState(note ? note.description : '');
-
-  // console.warn('rendered...');
-
-  const handleToolIconClick = (action) => {
-    // available tool actions - INFO | SHARE | TRASH
-    console.warn('action', action);
-  };
+const NotePage = ({ note, handleGoBack, handleInputChange, handleToolIconClick }) => {
+  const { title, body, tags } = note; // destructuring note abject
 
   return (
     <Fragment>
@@ -22,18 +14,28 @@ const NotePage = ({ note, handleGoBack }) => {
       <View style={styles.container}>
         {/* autofocus if it is a new note request */}
         <TextInput
-          style={styles.inputStyle}
-          value={noteText}
+          style={{ ...styles.inputStyle, fontSize: 20 }}
+          value={title}
           multiline
-          autoFocus={note === null}
-          onChangeText={(text) => setNoteText(text)}
+          // autoFocus={note === null}
+          onChangeText={(text) => handleInputChange('title', text)}
           // avoiding unusual text breaks
           textBreakStrategy="simple"
-          placeholder="New Note"
+          placeholder="Note Title"
+        />
+        <TextInput
+          style={styles.inputStyle}
+          value={body}
+          multiline
+          // autoFocus={note === null}
+          onChangeText={(text) => handleInputChange('body', text)}
+          // avoiding unusual text breaks
+          textBreakStrategy="simple"
+          placeholder="Write Here..."
         />
       </View>
       {/* note tags */}
-      <NoteTags tagList={note ? note.tags : []} />
+      <NoteTags tagList={tags} />
     </Fragment>
   );
 };
