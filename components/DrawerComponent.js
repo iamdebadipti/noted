@@ -8,7 +8,10 @@ const DrawerComponent = ({ ...props }) => {
   const handleSignOut = () => {
     auth()
       .signOut()
-      .then(() => console.log('User signed out!'));
+      .then(() => console.log('User signed out!'))
+      .catch((error) => {
+        console.log(error);
+      });
   };
 
   return (
