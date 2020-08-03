@@ -29,10 +29,21 @@ const App = () => {
     }
   };
 
+  // clear user Data
+  const clearUserData = async () => {
+    await AsyncStorage.clear(); // clear AsyncStorage
+    setUser(false); // set user to false
+  };
+
   // Handle user state changes
   function onAuthStateChanged(user) {
-    storeUserData(user); // save the user details in async storage
-    setUser(true); // set the user state to true -- we have our user now
+    if (user) {
+      storeUserData(user); // save the user details in async storage
+      setUser(true); // set the user state to true -- we have our user now
+    } else {
+      // may be signed out
+      clearUserData();
+    }
     if (initializing) setInitializing(false);
   }
 
