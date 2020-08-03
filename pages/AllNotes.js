@@ -1,5 +1,5 @@
-import React, { Fragment, useState, useEffect } from 'react';
-import { FlatList, StyleSheet, TouchableOpacity, Text, AsyncStorage } from 'react-native';
+import React, { Fragment, useState, useEffect, useCallback } from 'react';
+import { FlatList, StyleSheet, TouchableOpacity, Text } from 'react-native';
 import PageHeader from '../components/PageHeader';
 import NoteListItem from '../components/NoteListItem';
 import ModalCustom from '../components/ModalCustom';
@@ -8,37 +8,32 @@ import Icon from 'react-native-vector-icons/Feather';
 import { theme } from '../config';
 import EmptyComponent from '../components/EmptyComponent';
 import LoadingFullPage from '../components/LoadingFullPage';
-import firestore from '@react-native-firebase/firestore';
+import { useNoteStore } from '../store';
+import { useFocusEffect } from '@react-navigation/native';
 
 const AllNotes = ({ navigation }) => {
-  const [notes, setNotes] = useState(null); // state for storing all the notes
   const [selectedNoteId, setSelectedNoteId] = useState(null); // selected note id state
   const [modalShow, setModalShow] = useState(false); // modal show state
+  // zustand store
+  const allNotes = useNoteStore((state) => state.allNotes); // allNotes state
+  const fetchAllNotes = useNoteStore((state) => state.fetchAllNotes); // fetchAllNotes action
 
-  const fetchNotes = async () => {
-    const notesArr = []; // init an empty note list array
-    const userId = await AsyncStorage.getItem('user_id'); // get the user id from AsyncStorage API
-    // get firestore data
-    await firestore()
-      .collection('notes')
-      .doc(userId) // user id here
-      .collection('list')
-      .get()
-      .then((querySnapshot) => {
-        querySnapshot.forEach((doc) => {
-          notesArr.push({ id: doc.id, ...doc.data() }); // push to the notesArr[] with id key attached
-        });
-      });
-
-    setNotes(notesArr); // set the notesArr[] as the notes state array
-  };
+  // console.warn('rendered...');
 
   useEffect(() => {
-    console.warn('fetching the note list...');
-    fetchNotes(); // fetching the notes from firebase firestore
+    // console.warn('fetching...');
+    fetchAllNotes(); // fetching the notes from firestore once
   }, []);
 
-  if (!notes) {
+  // useFocusEffect(
+  //   useCallback(() => {
+  //     console.warn('focused....');
+  //   })
+  // );
+
+  // console.warn('allNotes', allNotes);
+
+  if (!allNotes) {
     return <LoadingFullPage />; // we are still fetching the notes
   }
 
@@ -51,9 +46,9 @@ const AllNotes = ({ navigation }) => {
       />
 
       {/* all notes -- render FlatList otherwise an Empty Component if there is no data */}
-      {notes.length ? (
+      {allNotes.length ? (
         <FlatList
-          data={notes}
+          data={allNotes}
           renderItem={({ item }) => (
             <NoteListItem item={item} key={item.id} setModalShow={setModalShow} setSelectedNoteId={setSelectedNoteId} />
           )}
