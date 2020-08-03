@@ -29,10 +29,10 @@ const NoteTags = ({ tagList }) => {
       <View style={styles.tagsFlex}>
         {tagList.length > 0
           ? // rendering tag list here
-            tagList.map((tag) => {
+            tagList.map((tag, index) => {
               return (
-                <View style={styles.tagSingle} key={tag.id}>
-                  <Text style={styles.tagSingleText}>{tag.name}</Text>
+                <View style={styles.tagSingle} key={index}>
+                  <Text style={styles.tagSingleText}>{tag}</Text>
                   <TouchableOpacity onPress={() => handleRemoveTag(tag.id)}>
                     <Icon style={styles.tagSingleRemove} name="minus-circle" size={16} color={theme.accentColor} />
                   </TouchableOpacity>

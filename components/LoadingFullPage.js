@@ -11,7 +11,6 @@ const LoadingFullPage = ({ size, color, text }) => {
 
     timerId = setTimeout(() => {
       setShow(true);
-      console.warn('hello error');
     }, 100);
 
     return () => {

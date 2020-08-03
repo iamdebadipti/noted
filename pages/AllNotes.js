@@ -54,8 +54,8 @@ const AllNotes = ({ navigation }) => {
       {notes.length ? (
         <FlatList
           data={notes}
-          renderItem={({ item, index }) => (
-            <NoteListItem item={item} key={index} setModalShow={setModalShow} setSelectedNoteId={setSelectedNoteId} />
+          renderItem={({ item }) => (
+            <NoteListItem item={item} key={item.id} setModalShow={setModalShow} setSelectedNoteId={setSelectedNoteId} />
           )}
         />
       ) : (
