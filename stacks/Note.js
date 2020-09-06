@@ -2,21 +2,22 @@ import React, { useEffect, useState } from 'react';
 import { useRoute } from '@react-navigation/native';
 import NotePage from '../pages/Note';
 import LoadingFullPage from '../components/LoadingFullPage';
-import { Button } from 'react-native';
+import { ToastAndroid } from 'react-native';
 import { useNoteStore } from '../store';
 
 const Note = ({ navigation }) => {
-  const [{ title, body, tags }, setNote] = useState({ title: '', body: '', tags: [] }); // note initial state
+  const [{ id, title, body, tags }, setNote] = useState({ id: '', title: '', body: '', tags: [] }); // note initial state
   const [loading, setLoading] = useState(true);
   const { params } = useRoute(); // get navigation params using useRoute hook
   const allNotes = useNoteStore((state) => state.allNotes); // useNoteStore hook from zustand -- allNotes subscribed
   const saveNote = useNoteStore((state) => state.saveNote); // saveNote hook from zustand
+  const deleteNote = useNoteStore((state) => state.deleteNote); // saveNote hook from zustand
 
   useEffect(() => {
     if (params) {
       const noteId = params.note_id; // get note_id from route params
       const singleNote = allNotes.filter((note) => note.id === noteId)[0]; // filter a single
-      setNote({ title: singleNote.title, body: singleNote.body, tags: singleNote.tags }); // setting the fetched note data in state
+      setNote({ id: params.note_id, title: singleNote.title, body: singleNote.body, tags: singleNote.tags }); // setting the fetched note data in state
       setTimeout(() => {
         setLoading(false); // setting loading to false
       }, 200);
@@ -51,9 +52,25 @@ const Note = ({ navigation }) => {
     }
   };
 
+  // show toast
+  const showToast = (message) => {
+    ToastAndroid.show(message, ToastAndroid.SHORT, ToastAndroid.CENTER);
+  };
+
   // handle note tool action
   const handleToolIconClick = (action) => {
-    console.warn('action', action); // available tool actions - INFO | SHARE | TRASH
+    // console.warn('action', action); // available tool actions - INFO | SHARE | DELETE
+    switch (action) {
+      case 'DELETE':
+        if (id) {
+          deleteNote(id); // delete the note passing the note id
+          showToast('Successfully Deleted!');
+        }
+        break;
+
+      default:
+        break;
+    }
   };
 
   return loading ? (
@@ -66,7 +83,6 @@ const Note = ({ navigation }) => {
         handleInputChange={handleInputChange}
         handleToolIconClick={handleToolIconClick}
       />
-      <Button title="Save" onPress={() => handleSaveNote()} />
     </>
   );
 };

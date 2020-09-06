@@ -1,6 +1,6 @@
 import create from 'zustand';
 import firestore from '@react-native-firebase/firestore';
-import { AsyncStorage } from 'react-native';
+import { AsyncStorage, ToastAndroid } from 'react-native';
 
 export const [useNoteStore] = create((set) => ({
   allNotes: null,
@@ -48,6 +48,22 @@ export const [useNoteStore] = create((set) => ({
           set((state) => ({ allNotes: [...state.allNotes, { id: snapshot.id, ...snapshot.data() }] }));
         });
       })
+      .catch((err) => {
+        console.warn(err);
+      });
+    // set({ allNotes: [...allNotes] });
+  },
+
+  // delete note to firestore
+  deleteNote: async (noteId) => {
+    const userId = await AsyncStorage.getItem('user_id'); // get the user id from AsyncStorage API
+
+    await firestore()
+      .collection('notes')
+      .doc(userId) // user id here
+      .collection('list')
+      .doc(noteId)
+      .delete()
       .catch((err) => {
         console.warn(err);
       });
