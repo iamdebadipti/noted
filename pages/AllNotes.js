@@ -1,5 +1,5 @@
 import React, { Fragment, useState, useEffect, useCallback } from 'react';
-import { FlatList, StyleSheet, TouchableOpacity, Text } from 'react-native';
+import { FlatList, StyleSheet, TouchableOpacity, Text, ScrollView, SafeAreaView, RefreshControl } from 'react-native';
 import PageHeader from '../components/PageHeader';
 import NoteListItem from '../components/NoteListItem';
 import ModalCustom from '../components/ModalCustom';
@@ -9,7 +9,7 @@ import { theme } from '../config';
 import EmptyComponent from '../components/EmptyComponent';
 import LoadingFullPage from '../components/LoadingFullPage';
 import { useNoteStore } from '../store';
-import { useFocusEffect } from '@react-navigation/native';
+// import { useFocusEffect } from '@react-navigation/native';
 
 const AllNotes = ({ navigation }) => {
   const [selectedNoteId, setSelectedNoteId] = useState(null); // selected note id state
@@ -33,6 +33,17 @@ const AllNotes = ({ navigation }) => {
 
   // console.warn('allNotes', allNotes);
 
+  const [refreshing, setRefreshing] = useState(false);
+
+  const onRefresh = useCallback(() => {
+    setRefreshing(true);
+    fetchAllNotes(); // refetch all the notes from the store
+
+    setTimeout(() => {
+      setRefreshing(false);
+    }, 500); // hard coding the refresh timeout
+  }, []);
+
   if (!allNotes) {
     return <LoadingFullPage />; // we are still fetching the notes
   }
@@ -48,6 +59,7 @@ const AllNotes = ({ navigation }) => {
       {/* all notes -- render FlatList otherwise an Empty Component if there is no data */}
       {allNotes.length ? (
         <FlatList
+          refreshControl={<RefreshControl colors={[theme.accentColor]} refreshing={refreshing} onRefresh={onRefresh} />}
           data={allNotes}
           renderItem={({ item }) => (
             <NoteListItem item={item} key={item.id} setModalShow={setModalShow} setSelectedNoteId={setSelectedNoteId} />
