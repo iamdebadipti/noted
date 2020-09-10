@@ -40,5 +40,8 @@
   "jest": {
     "preset": "react-native"
   },
-  "private": true
+  "private": true,
+  "resolutions": {
+    "**/**/node-fetch": ">=2.6.1"
+  }
 }
