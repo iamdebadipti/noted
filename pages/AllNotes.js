@@ -121,8 +121,8 @@ const styles = StyleSheet.create({
   },
   floatingButton: {
     position: 'absolute',
-    bottom: 36,
-    right: 36,
+    bottom: 46,
+    right: 30,
     width: 54,
     height: 54,
     backgroundColor: theme.accentColor,

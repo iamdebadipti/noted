@@ -1,10 +1,11 @@
 import React, { Fragment } from 'react';
-import { TextInput, StyleSheet, View } from 'react-native';
+import { TextInput, StyleSheet, View, TouchableOpacity } from 'react-native';
 import NoteHeader from '../components/NoteHeader';
 import { theme } from '../config';
 import NoteTags from '../components/NoteTags';
+import Icon from 'react-native-vector-icons/Feather';
 
-const NotePage = ({ note, handleGoBack, handleInputChange, handleToolIconClick }) => {
+const NotePage = ({ note, handleGoBack, handleInputChange, handleToolIconClick, handleSaveNote }) => {
   const { title, body, tags } = note; // destructuring note abject
 
   return (
@@ -24,7 +25,7 @@ const NotePage = ({ note, handleGoBack, handleInputChange, handleToolIconClick }
           placeholder="Note Title"
         />
         <TextInput
-          style={styles.inputStyle}
+          style={{ ...styles.inputStyle, minHeight: 100 }}
           value={body}
           multiline
           // autoFocus={note === null}
@@ -34,6 +35,14 @@ const NotePage = ({ note, handleGoBack, handleInputChange, handleToolIconClick }
           placeholder="Write Here..."
         />
       </View>
+      {/* save note floating button */}
+      <TouchableOpacity
+        style={styles.floatingButton}
+        activeOpacity={theme.activeOpacity}
+        onPress={() => handleSaveNote()}
+      >
+        <Icon name="check" size={24} color="#ffffff" />
+      </TouchableOpacity>
       {/* note tags */}
       <NoteTags tagList={tags} />
     </Fragment>
@@ -52,6 +61,18 @@ const styles = StyleSheet.create({
     textAlignVertical: 'top',
     fontSize: 18,
     color: theme.textMain
+  },
+  floatingButton: {
+    position: 'absolute',
+    bottom: 60,
+    right: 30,
+    width: 54,
+    height: 54,
+    backgroundColor: theme.accentColor,
+    alignItems: 'center',
+    justifyContent: 'center',
+    borderRadius: 27,
+    elevation: 4
   }
 });
 
