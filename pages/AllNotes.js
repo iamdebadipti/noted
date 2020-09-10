@@ -9,7 +9,7 @@ import { theme } from '../config';
 import EmptyComponent from '../components/EmptyComponent';
 import LoadingFullPage from '../components/LoadingFullPage';
 import { useNoteStore } from '../store';
-// import { useFocusEffect } from '@react-navigation/native';
+import { useIsFocused } from '@react-navigation/native';
 
 const AllNotes = ({ navigation }) => {
   const [selectedNoteId, setSelectedNoteId] = useState(null); // selected note id state
@@ -18,20 +18,12 @@ const AllNotes = ({ navigation }) => {
   const allNotes = useNoteStore((state) => state.allNotes); // allNotes state
   const fetchAllNotes = useNoteStore((state) => state.fetchAllNotes); // fetchAllNotes action
 
-  // console.warn('rendered...');
+  const isFocused = useIsFocused(); // needs allNotes to work properly -- re-renders the component
 
   useEffect(() => {
     // console.warn('fetching...');
     fetchAllNotes(); // fetching the notes from firestore once
   }, []);
-
-  // useFocusEffect(
-  //   useCallback(() => {
-  //     console.warn('focused....');
-  //   })
-  // );
-
-  // console.warn('allNotes', allNotes);
 
   const [refreshing, setRefreshing] = useState(false);
 
@@ -70,13 +62,15 @@ const AllNotes = ({ navigation }) => {
       )}
 
       {/* add note floating button -- clicking will navigate to Note stack */}
-      <TouchableOpacity
-        style={styles.floatingButton}
-        activeOpacity={theme.activeOpacity}
-        onPress={() => navigation.navigate('Note')}
-      >
-        <Icon name="plus" size={24} color="#ffffff" />
-      </TouchableOpacity>
+      {isFocused && (
+        <TouchableOpacity
+          style={styles.floatingButton}
+          activeOpacity={theme.activeOpacity}
+          onPress={() => navigation.navigate('Note')}
+        >
+          <Icon name="plus" size={24} color="#ffffff" />
+        </TouchableOpacity>
+      )}
 
       {/* long press action modal */}
       <ModalCustom
