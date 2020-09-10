@@ -2,8 +2,8 @@ import React, { useEffect, useState } from 'react';
 import { useRoute } from '@react-navigation/native';
 import NotePage from '../pages/Note';
 import LoadingFullPage from '../components/LoadingFullPage';
-import { ToastAndroid } from 'react-native';
 import { useNoteStore } from '../store';
+import { showToast } from '../utils';
 
 const Note = ({ navigation }) => {
   const [{ id, title, body, tags }, setNote] = useState({ id: '', title: '', body: '', tags: [] }); // note initial state
@@ -30,10 +30,12 @@ const Note = ({ navigation }) => {
 
   // save the note in firebase
   const handleSaveNote = async () => {
-    const noteObj = { title: title ? title : ' ', body: body, tags: tags };
+    const noteObj = { title: title ? title : '(Empty Title)', body: body, tags: tags };
     // check the note body before saving
     if (body !== '') {
-      saveNote(noteObj);
+      await saveNote(noteObj);
+    } else {
+      showToast('Please write something!');
     }
     return;
   };
@@ -52,19 +54,15 @@ const Note = ({ navigation }) => {
     }
   };
 
-  // show toast
-  const showToast = (message) => {
-    ToastAndroid.show(message, ToastAndroid.SHORT, ToastAndroid.CENTER);
-  };
-
   // handle note tool action
-  const handleToolIconClick = (action) => {
+  const handleToolIconClick = async (action) => {
     // console.warn('action', action); // available tool actions - INFO | SHARE | DELETE
     switch (action) {
       case 'DELETE':
         if (id) {
-          deleteNote(id); // delete the note passing the note id
-          showToast('Successfully Deleted!');
+          await deleteNote(id); // delete the note passing the note id
+        } else {
+          showToast('Note is not saved yet');
         }
         break;
 
@@ -82,6 +80,7 @@ const Note = ({ navigation }) => {
         handleGoBack={() => navigation.navigate('Main')}
         handleInputChange={handleInputChange}
         handleToolIconClick={handleToolIconClick}
+        handleSaveNote={handleSaveNote}
       />
     </>
   );

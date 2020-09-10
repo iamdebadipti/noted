@@ -1,6 +1,7 @@
 import create from 'zustand';
 import firestore from '@react-native-firebase/firestore';
-import { AsyncStorage, ToastAndroid } from 'react-native';
+import { AsyncStorage } from 'react-native';
+import { showToast } from './utils';
 
 export const [useNoteStore] = create((set) => ({
   allNotes: null,
@@ -44,12 +45,13 @@ export const [useNoteStore] = create((set) => ({
       })
       .then((snap) => {
         snap.onSnapshot((snapshot) => {
-          console.warn('state update complete...');
-          set((state) => ({ allNotes: [...state.allNotes, { id: snapshot.id, ...snapshot.data() }] }));
+          set((state) => ({ allNotes: [{ id: snapshot.id, ...snapshot.data() }, ...state.allNotes] }));
+          showToast('Note Saved Successfully!');
         });
       })
       .catch((err) => {
         console.warn(err);
+        showToast('Error Saving');
       });
     // set({ allNotes: [...allNotes] });
   },
@@ -64,6 +66,9 @@ export const [useNoteStore] = create((set) => ({
       .collection('list')
       .doc(noteId)
       .delete()
+      .then(() => {
+        showToast('Deleted Successfully!');
+      })
       .catch((err) => {
         console.warn(err);
       });
