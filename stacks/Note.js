@@ -49,18 +49,21 @@ const Note = ({ navigation }) => {
       case 'body':
         setNote((note) => ({ ...note, body: value }));
         break;
+      case 'tags':
+        setNote((note) => ({ ...note, tags: [...tags, value] }));
+        break;
       default:
         break;
     }
   };
 
   // handle note tool action
-  const handleToolIconClick = async (action) => {
+  const handleToolIconClick = (action) => {
     // console.warn('action', action); // available tool actions - INFO | SHARE | DELETE
     switch (action) {
       case 'DELETE':
         if (id) {
-          await deleteNote(id); // delete the note passing the note id
+          deleteNote(id); // delete the note passing the note id
         } else {
           showToast('Note is not saved yet');
         }
@@ -69,6 +72,14 @@ const Note = ({ navigation }) => {
       default:
         break;
     }
+  };
+
+  // handle tag remove
+  const handleRemoveTag = (index) => {
+    let tagsArr = tags;
+    tagsArr.splice(index, 1);
+
+    setNote((note) => ({ ...note, tags: [...tagsArr] })); // saving the state
   };
 
   return loading ? (
@@ -81,6 +92,7 @@ const Note = ({ navigation }) => {
         handleInputChange={handleInputChange}
         handleToolIconClick={handleToolIconClick}
         handleSaveNote={handleSaveNote}
+        handleRemoveTag={handleRemoveTag}
       />
     </>
   );

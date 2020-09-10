@@ -3,23 +3,12 @@ import { View, Text, StyleSheet, TextInput, TouchableOpacity } from 'react-nativ
 import Icon from 'react-native-vector-icons/Feather';
 import { theme } from '../config';
 
-const NoteTags = ({ tagList }) => {
+const NoteTags = ({ tagList, handleInputChange, handleRemoveTag }) => {
   const [tagText, setTagText] = useState('');
 
   // tag input text change handle -- setting the state
   const handleTagInputChange = (text) => {
     setTagText(text);
-  };
-
-  // keyboard submit function in tag input
-  const handleTagSubmit = async () => {
-    await console.warn(tagText);
-    await setTagText('');
-  };
-
-  // remove individual tag from tag list
-  const handleRemoveTag = (tagId) => {
-    console.warn('remove tag: ', tagId);
   };
 
   return (
@@ -33,7 +22,7 @@ const NoteTags = ({ tagList }) => {
               return (
                 <View style={styles.tagSingle} key={index}>
                   <Text style={styles.tagSingleText}>{tag}</Text>
-                  <TouchableOpacity onPress={() => handleRemoveTag(tag.id)}>
+                  <TouchableOpacity onPress={() => handleRemoveTag(index)}>
                     <Icon style={styles.tagSingleRemove} name="minus-circle" size={16} color={theme.accentColor} />
                   </TouchableOpacity>
                 </View>
@@ -47,7 +36,10 @@ const NoteTags = ({ tagList }) => {
             value={tagText}
             onChangeText={(text) => handleTagInputChange(text)}
             placeholder="Add Tag..."
-            onSubmitEditing={() => handleTagSubmit()}
+            onSubmitEditing={async () => {
+              await handleInputChange('tags', tagText);
+              await setTagText('');
+            }}
             // after submit prevent focus lose
             blurOnSubmit={false}
           />

@@ -5,7 +5,7 @@ import { theme } from '../config';
 import NoteTags from '../components/NoteTags';
 import Icon from 'react-native-vector-icons/Feather';
 
-const NotePage = ({ note, handleGoBack, handleInputChange, handleToolIconClick, handleSaveNote }) => {
+const NotePage = ({ note, handleGoBack, handleInputChange, handleToolIconClick, handleSaveNote, handleRemoveTag }) => {
   const { title, body, tags } = note; // destructuring note abject
 
   return (
@@ -44,7 +44,7 @@ const NotePage = ({ note, handleGoBack, handleInputChange, handleToolIconClick, 
         <Icon name="check" size={24} color="#ffffff" />
       </TouchableOpacity>
       {/* note tags */}
-      <NoteTags tagList={tags} />
+      <NoteTags tagList={tags} handleInputChange={handleInputChange} handleRemoveTag={handleRemoveTag} />
     </Fragment>
   );
 };

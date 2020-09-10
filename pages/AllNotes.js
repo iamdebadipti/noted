@@ -1,5 +1,5 @@
 import React, { Fragment, useState, useEffect, useCallback } from 'react';
-import { FlatList, StyleSheet, TouchableOpacity, Text, ScrollView, SafeAreaView, RefreshControl } from 'react-native';
+import { FlatList, StyleSheet, TouchableOpacity, Text, RefreshControl } from 'react-native';
 import PageHeader from '../components/PageHeader';
 import NoteListItem from '../components/NoteListItem';
 import ModalCustom from '../components/ModalCustom';

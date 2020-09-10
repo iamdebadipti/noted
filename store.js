@@ -7,6 +7,7 @@ export const [useNoteStore] = create((set) => ({
   allNotes: null,
   // fetch all the notes from firebase firestore
   fetchAllNotes: async () => {
+    // console.warn('fetching.....');
     const notesArr = []; // init an empty note list array
     const userId = await AsyncStorage.getItem('user_id'); // get the user id from AsyncStorage API
     // get firestore data
@@ -14,6 +15,7 @@ export const [useNoteStore] = create((set) => ({
       .collection('notes')
       .doc(userId) // user id here
       .collection('list')
+      .orderBy('updated_at', 'desc')
       .get()
       .then((querySnapshot) => {
         if (querySnapshot.docs.length > 0) {
@@ -31,6 +33,7 @@ export const [useNoteStore] = create((set) => ({
 
   // save note to firestore
   saveNote: async (noteObj) => {
+    // console.warn('saving.....');
     const { title, body, tags } = noteObj; // getting note object details
     // console.warn('noteObj', noteObj);
     const userId = await AsyncStorage.getItem('user_id'); // get the user id from AsyncStorage API
@@ -39,14 +42,16 @@ export const [useNoteStore] = create((set) => ({
       .doc(userId) // user id here
       .collection('list')
       .add({
+        created_at: new Date(),
+        updated_at: new Date(),
         title: title,
         body: body,
-        tags: ['Ideas', 'Motivations']
+        tags: tags
       })
       .then((snap) => {
         snap.onSnapshot((snapshot) => {
+          showToast('Saved Successfully!');
           set((state) => ({ allNotes: [{ id: snapshot.id, ...snapshot.data() }, ...state.allNotes] }));
-          showToast('Note Saved Successfully!');
         });
       })
       .catch((err) => {
@@ -58,6 +63,7 @@ export const [useNoteStore] = create((set) => ({
 
   // delete note to firestore
   deleteNote: async (noteId) => {
+    // console.warn('delete.....');
     const userId = await AsyncStorage.getItem('user_id'); // get the user id from AsyncStorage API
 
     await firestore()
@@ -68,6 +74,7 @@ export const [useNoteStore] = create((set) => ({
       .delete()
       .then(() => {
         showToast('Deleted Successfully!');
+        set((state) => ({ allNotes: state.allNotes.filter((note) => note.id !== noteId) }));
       })
       .catch((err) => {
         console.warn(err);
