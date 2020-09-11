@@ -3,7 +3,7 @@ import firestore from '@react-native-firebase/firestore';
 import { AsyncStorage } from 'react-native';
 import { showToast } from './utils';
 
-export const [useNoteStore] = create((set) => ({
+export const [useNoteStore] = create((set, get) => ({
   allNotes: null,
   // fetch all the notes from firebase firestore
   fetchAllNotes: async () => {
@@ -50,8 +50,8 @@ export const [useNoteStore] = create((set) => ({
       })
       .then((snap) => {
         snap.onSnapshot((snapshot) => {
-          showToast('Saved Successfully!');
           set((state) => ({ allNotes: [{ id: snapshot.id, ...snapshot.data() }, ...state.allNotes] }));
+          showToast('Saved Successfully!');
         });
       })
       .catch((err) => {
@@ -65,7 +65,6 @@ export const [useNoteStore] = create((set) => ({
   deleteNote: async (noteId) => {
     // console.warn('delete.....');
     const userId = await AsyncStorage.getItem('user_id'); // get the user id from AsyncStorage API
-
     await firestore()
       .collection('notes')
       .doc(userId) // user id here
@@ -73,12 +72,58 @@ export const [useNoteStore] = create((set) => ({
       .doc(noteId)
       .delete()
       .then(() => {
-        showToast('Deleted Successfully!');
         set((state) => ({ allNotes: state.allNotes.filter((note) => note.id !== noteId) }));
+        showToast('Deleted Successfully!');
       })
       .catch((err) => {
         console.warn(err);
       });
     // set({ allNotes: [...allNotes] });
+  },
+
+  // update note in the firebase
+  updateNote: async (noteId, noteObj) => {
+    // console.warn('updating...');
+    const { title, body, tags } = noteObj; // getting note object details
+    // console.warn('noteObj', noteObj);
+    const userId = await AsyncStorage.getItem('user_id'); // get the user id from AsyncStorage API
+    await firestore()
+      .collection('notes')
+      .doc(userId) // user id here
+      .collection('list')
+      .doc(noteId) // note id here
+      .update({
+        updated_at: new Date(),
+        title: title,
+        body: body,
+        tags: tags
+      })
+      .then(() => {
+        // console.warn(notes);
+        // set((state) => ({ allNotes: [{ id: snapshot.id, ...snapshot.data() }, ...state.allNotes] }));
+        showToast('Updated Successfully!');
+      })
+      .catch((err) => {
+        console.warn(err);
+        showToast('Error Updating');
+      });
+
+    await firestore()
+      .collection('notes')
+      .doc(userId) // user id here
+      .collection('list')
+      .doc(noteId)
+      .get()
+      .then((snap) => {
+        const updatedNote = snap.data();
+        const notesArr = get().allNotes.filter((item) => item.id !== noteId);
+        notesArr.splice(0, 0, updatedNote);
+        // update the store
+        set({ allNotes: notesArr });
+      })
+      .catch((err) => {
+        console.warn(err);
+        showToast('Something went wrong!');
+      });
   }
 }));

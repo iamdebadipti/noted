@@ -56,6 +56,7 @@ const AllNotes = ({ navigation }) => {
           renderItem={({ item }) => (
             <NoteListItem item={item} key={item.id} setModalShow={setModalShow} setSelectedNoteId={setSelectedNoteId} />
           )}
+          keyExtractor={(item) => item.id} // virtualized list needs a keyExtractor
         />
       ) : (
         <EmptyComponent title="Write your first note!" />

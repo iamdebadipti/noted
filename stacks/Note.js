@@ -11,7 +11,8 @@ const Note = ({ navigation }) => {
   const { params } = useRoute(); // get navigation params using useRoute hook
   const allNotes = useNoteStore((state) => state.allNotes); // useNoteStore hook from zustand -- allNotes subscribed
   const saveNote = useNoteStore((state) => state.saveNote); // saveNote hook from zustand
-  const deleteNote = useNoteStore((state) => state.deleteNote); // saveNote hook from zustand
+  const deleteNote = useNoteStore((state) => state.deleteNote); // deleteNote hook from zustand
+  const updateNote = useNoteStore((state) => state.updateNote); // saveNote hook from zustand
 
   useEffect(() => {
     if (params) {
@@ -34,6 +35,18 @@ const Note = ({ navigation }) => {
     // check the note body before saving
     if (body !== '') {
       await saveNote(noteObj);
+    } else {
+      showToast('Please write something!');
+    }
+    return;
+  };
+
+  // update the note in firebase
+  const handleUpdateNote = async () => {
+    const noteObj = { title: title, body: body, tags: tags };
+    // check the note body before saving
+    if (body !== '') {
+      await updateNote(id, noteObj);
     } else {
       showToast('Please write something!');
     }
@@ -87,12 +100,13 @@ const Note = ({ navigation }) => {
   ) : (
     <>
       <NotePage
-        note={{ title: title, body: body, tags: tags }}
+        note={{ id: id, title: title, body: body, tags: tags }}
         handleGoBack={() => navigation.navigate('Main')}
         handleInputChange={handleInputChange}
         handleToolIconClick={handleToolIconClick}
         handleSaveNote={handleSaveNote}
         handleRemoveTag={handleRemoveTag}
+        handleUpdateNote={handleUpdateNote}
       />
     </>
   );
